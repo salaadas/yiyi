@@ -10,12 +10,13 @@ const express_1 = __importDefault(require("express"));
 const type_graphql_1 = require("type-graphql");
 const hello_1 = require("./resolvers/hello");
 const message_1 = require("./resolvers/message");
+const user_1 = require("./resolvers/user");
 const prisma = new client_1.PrismaClient();
 (async () => {
     const app = (0, express_1.default)();
     const apolloServer = new apollo_server_express_1.ApolloServer({
         schema: await (0, type_graphql_1.buildSchema)({
-            resolvers: [hello_1.HelloResolver, message_1.MessageResolver],
+            resolvers: [hello_1.HelloResolver, message_1.MessageResolver, user_1.UserResolver],
             validate: false,
         }),
         context: ({ req, res }) => {
