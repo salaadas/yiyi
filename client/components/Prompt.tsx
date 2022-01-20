@@ -3,7 +3,11 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import { InputField } from './InputField';
 
-export const Prompt = () => {
+interface promptProps {
+  fn: Function;
+}
+
+export const Prompt: React.FC<promptProps> = ({ fn }) => {
   return (
     <>
       <div className="land h-full">
@@ -20,7 +24,7 @@ export const Prompt = () => {
 
           <Formik
             initialValues={{ email: '', password: '' }}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values) => fn({ input: values })}
           >
             {({}) => (
               <Form className="grid grid-cols-1 gap-4 mt-1">

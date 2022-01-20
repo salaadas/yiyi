@@ -14,11 +14,16 @@ const user_1 = require("./resolvers/user");
 const connect_redis_1 = __importDefault(require("connect-redis"));
 const express_session_1 = __importDefault(require("express-session"));
 const redis_1 = require("redis");
+const cors_1 = __importDefault(require("cors"));
 const prisma = new client_1.PrismaClient();
 (async () => {
     const app = (0, express_1.default)();
     const RedisStore = (0, connect_redis_1.default)(express_session_1.default);
     const redisClient = (0, redis_1.createClient)();
+    app.use((0, cors_1.default)({
+        origin: 'http://localhost:3000',
+        credentials: true,
+    }));
     app.use((0, express_session_1.default)({
         store: new RedisStore({ client: redisClient, disableTouch: true }),
         name: 'yid',
@@ -29,7 +34,7 @@ const prisma = new client_1.PrismaClient();
             secure: false,
             sameSite: 'lax',
         },
-        secret: process.env.SECRET || 'ksdjfklsfdafewoovnwzzco',
+        secret: 'ksdjfklsfdafewoovnwzzco',
         resave: false,
     }));
     const apolloServer = new apollo_server_express_1.ApolloServer({
@@ -46,7 +51,7 @@ const prisma = new client_1.PrismaClient();
         },
     });
     await apolloServer.start();
-    apolloServer.applyMiddleware({ app });
+    apolloServer.applyMiddleware({ app, cors: false });
     app.listen(4000, () => {
         console.log('\tServer is running on port: 4000\n\tGo to localhost:4000/graphql to query data');
     });

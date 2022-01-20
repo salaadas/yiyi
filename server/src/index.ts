@@ -9,6 +9,7 @@ import { UserResolver } from './resolvers/user';
 import connectRedis from 'connect-redis';
 import session from 'express-session';
 import { createClient } from 'redis';
+import cors from 'cors';
 
 declare module 'express-session' {
   interface SessionData {
@@ -21,7 +22,14 @@ const prisma = new PrismaClient();
 (async () => {
   const app = express();
   const RedisStore = connectRedis(session);
-  const redisClient = createClient();
+  const redisClient = createClient(); // ({ url: process.env.REDIS_URL });
+
+  app.use(
+    cors({
+      origin: 'http://localhost:3000',
+      credentials: true,
+    })
+  );
 
   app.use(
     session({
@@ -34,7 +42,7 @@ const prisma = new PrismaClient();
         secure: false,
         sameSite: 'lax',
       },
-      secret: process.env.SECRET || 'ksdjfklsfdafewoovnwzzco',
+      secret: 'ksdjfklsfdafewoovnwzzco',
       resave: false,
     })
   );
@@ -54,7 +62,7 @@ const prisma = new PrismaClient();
   });
 
   await apolloServer.start();
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(4000, () => {
     console.log(
