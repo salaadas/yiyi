@@ -32,14 +32,12 @@ Set up the workflow:
 In `package.json`, add this to the `"scripts"`:
 
 ```json
-..
 "scripts": {
   "test": "echo \"Error: no test specified\" && exit 1",
   "watch": "tsc -w",
   "dev": "nodemon dist/index.js",
   "start": "node dist/index.js"
 },
-..
 ```
 
 **dev:** transpile the `.ts` files to `.js` and place those in `./dist/` folder
