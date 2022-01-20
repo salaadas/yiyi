@@ -1,0 +1,90 @@
+@tailwind base;
+
+@import url('http://fonts.cdnfonts.com/css/ia-writer-quattro-s');
+
+@tailwind components;
+@tailwind utilities;
+
+h1,
+h2,
+h3,
+h4,
+p {
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+p.bold {
+  font-weight: 700;
+}
+
+:root {
+  font-size: 16px;
+
+  --color-text-light: #31302e;
+  --color-text-secondary-light: #6d6f88;
+  --color-background-light: #fdfdfd;
+  --color-heading-primary-light: #34384d;
+
+  --color-text-dark: #b0b0b0;
+  --color-text-secondary-dark: #dbdada;
+  --color-heading-primary-dark: #fff;
+  --color-background-dark: #0f0d0c;
+
+  --color-heading-secondary: #08ce3a;
+  --color-accent: #c3d7d8;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+h2 {
+  font-size: 2.8rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.4rem;
+}
+
+p.small {
+  font-size: 0.85rem;
+}
+
+::-webkit-scrollbar {
+  overflow: overlay;
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  display: initial;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #333;
+  border-radius: 5px;
+}
+
+html,
+body,
+#__next {
+  background-color: var(--color-background-light);
+  color: var(--color-text-light);
+  height: 100%;
+  width: 100%;
+}
+
+button {
+  background-color: var(--color-accent);
+}
+
+.land {
+  background-image: url('../public/noise.png');
+}
