@@ -4,22 +4,20 @@ _Jan - 2022_
 
 ## Init and set up prisma
 
-Init:
+### Init:
 
 ```bash
 $ npm init -y
 ```
 
-Install these dependencies first:
+Install these **dependencies** first:
 
 ```bash
 $ yarn add typescript prisma @types/node
 $ yarn add -D nodemon
 ```
 
-_I use nodemon for auto reloading_
-
----
+_I use **nodemon** for auto reloading_
 
 Then, create a `src` dir and add a `.ts` file (in this case I went with `index.ts`)
 
@@ -27,7 +25,9 @@ Then, create a `src` dir and add a `.ts` file (in this case I went with `index.t
 $ mkdir src && touch src/index.ts
 ```
 
-Set up the workflow:
+---
+
+### Set up the workflow:
 
 In `package.json`, add this to the `"scripts"`:
 
@@ -46,7 +46,7 @@ In `package.json`, add this to the `"scripts"`:
 
 ---
 
-Configuring `prisma` (This guide uses `prisma` with `postgresql`)
+### Configuring `prisma` (This guide uses `prisma` with `postgresql`)
 
 In the terminal, do this:
 
@@ -87,7 +87,7 @@ model User {
 }
 ```
 
-To make a migration, do this:
+### To make a migration, do this:
 
 ```bash
 $ npx prisma migrate dev --name "your desired name"
@@ -97,7 +97,7 @@ It make a migration and apply the changes to the database, along with generating
 
 ---
 
-Prisma Client:
+### Prisma Client:
 
 Inside the `index.ts`, fill this example in:
 
