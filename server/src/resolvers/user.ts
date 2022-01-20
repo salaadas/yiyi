@@ -5,6 +5,7 @@ import {
   InputType,
   Mutation,
   ObjectType,
+  Query,
   Resolver,
 } from 'type-graphql';
 import { User } from '@generated/type-graphql';
@@ -47,10 +48,21 @@ class UserResponse {
 
 @Resolver()
 export class UserResolver {
+  @Query(() => User, { nullable: true })
+  async me(@Ctx() { req, prisma }: MyContext) {
+    if (req.session.userId) {
+      const user = await prisma.user.findUnique({
+        where: { id: req.session.userId },
+      });
+      return user;
+    }
+    return null;
+  }
+
   @Mutation(() => UserResponse)
   async register(
     @Arg('input') { name, email, password }: RegisterInput,
-    @Ctx() { prisma }: MyContext
+    @Ctx() { prisma, req }: MyContext
   ): Promise<UserResponse> {
     if (name.length <= 2) {
       return {
@@ -81,6 +93,8 @@ export class UserResolver {
           password: hashedPassword,
         },
       });
+
+      req.session.userId = user.id;
 
       return { user };
     } catch (err) {
@@ -121,7 +135,7 @@ export class UserResolver {
   @Mutation(() => UserResponse)
   async login(
     @Arg('input') { email, password }: LoginInput,
-    @Ctx() { prisma }: MyContext
+    @Ctx() { prisma, req }: MyContext
   ): Promise<UserResponse> {
     const user = await prisma.user.findUnique({
       where: { email },
@@ -150,6 +164,8 @@ export class UserResolver {
         ],
       };
     }
+
+    req.session.userId = user.id;
 
     return {
       user,

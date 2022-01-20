@@ -11,9 +11,27 @@ const type_graphql_1 = require("type-graphql");
 const hello_1 = require("./resolvers/hello");
 const message_1 = require("./resolvers/message");
 const user_1 = require("./resolvers/user");
+const connect_redis_1 = __importDefault(require("connect-redis"));
+const express_session_1 = __importDefault(require("express-session"));
+const redis_1 = require("redis");
 const prisma = new client_1.PrismaClient();
 (async () => {
     const app = (0, express_1.default)();
+    const RedisStore = (0, connect_redis_1.default)(express_session_1.default);
+    const redisClient = (0, redis_1.createClient)();
+    app.use((0, express_session_1.default)({
+        store: new RedisStore({ client: redisClient, disableTouch: true }),
+        name: 'yid',
+        saveUninitialized: false,
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
+            httpOnly: true,
+            secure: false,
+            sameSite: 'lax',
+        },
+        secret: process.env.SECRET || 'ksdjfklsfdafewoovnwzzco',
+        resave: false,
+    }));
     const apolloServer = new apollo_server_express_1.ApolloServer({
         schema: await (0, type_graphql_1.buildSchema)({
             resolvers: [hello_1.HelloResolver, message_1.MessageResolver, user_1.UserResolver],

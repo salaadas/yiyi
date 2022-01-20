@@ -76,7 +76,16 @@ UserResponse = __decorate([
     (0, type_graphql_1.ObjectType)()
 ], UserResponse);
 let UserResolver = class UserResolver {
-    async register({ name, email, password }, { prisma }) {
+    async me({ req, prisma }) {
+        if (req.session.userId) {
+            const user = await prisma.user.findUnique({
+                where: { id: req.session.userId },
+            });
+            return user;
+        }
+        return null;
+    }
+    async register({ name, email, password }, { prisma, req }) {
         if (name.length <= 2) {
             return {
                 errors: [
@@ -104,6 +113,7 @@ let UserResolver = class UserResolver {
                     password: hashedPassword,
                 },
             });
+            req.session.userId = user.id;
             return { user };
         }
         catch (err) {
@@ -141,7 +151,7 @@ let UserResolver = class UserResolver {
             }
         }
     }
-    async login({ email, password }, { prisma }) {
+    async login({ email, password }, { prisma, req }) {
         const user = await prisma.user.findUnique({
             where: { email },
         });
@@ -166,11 +176,19 @@ let UserResolver = class UserResolver {
                 ],
             };
         }
+        req.session.userId = user.id;
         return {
             user,
         };
     }
 };
+__decorate([
+    (0, type_graphql_1.Query)(() => type_graphql_2.User, { nullable: true }),
+    __param(0, (0, type_graphql_1.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "me", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => UserResponse),
     __param(0, (0, type_graphql_1.Arg)('input')),

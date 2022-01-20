@@ -6,11 +6,38 @@ import { buildSchema } from 'type-graphql';
 import { HelloResolver } from './resolvers/hello';
 import { MessageResolver } from './resolvers/message';
 import { UserResolver } from './resolvers/user';
+import connectRedis from 'connect-redis';
+import session from 'express-session';
+import { createClient } from 'redis';
+
+declare module 'express-session' {
+  interface SessionData {
+    userId: number; // to store userId in req.session
+  }
+}
 
 const prisma = new PrismaClient();
 
 (async () => {
   const app = express();
+  const RedisStore = connectRedis(session);
+  const redisClient = createClient();
+
+  app.use(
+    session({
+      store: new RedisStore({ client: redisClient, disableTouch: true }),
+      name: 'yid',
+      saveUninitialized: false,
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
+        httpOnly: true,
+        secure: false,
+        sameSite: 'lax',
+      },
+      secret: process.env.SECRET || 'ksdjfklsfdafewoovnwzzco',
+      resave: false,
+    })
+  );
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
