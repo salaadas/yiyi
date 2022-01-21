@@ -2,12 +2,16 @@ import Head from 'next/head';
 import React from 'react';
 import { Formik, Form } from 'formik';
 import { InputField } from './InputField';
+import { toErrorMap } from '../utils/toErrorMap';
+import { useRouter } from 'next/router';
 
 interface promptProps {
   fn: Function;
 }
 
 export const Prompt: React.FC<promptProps> = ({ fn }) => {
+  const router = useRouter();
+
   return (
     <>
       <div className="land h-full">
@@ -24,7 +28,15 @@ export const Prompt: React.FC<promptProps> = ({ fn }) => {
 
           <Formik
             initialValues={{ email: '', password: '' }}
-            onSubmit={(values) => fn({ input: values })}
+            onSubmit={async (values, { setErrors }) => {
+              const response = await fn({ input: values });
+              if (response.data?.login.errors) {
+                setErrors(toErrorMap(response.data.login.errors));
+              } else if (response.data?.login.user) {
+                // works
+                router.push('/');
+              }
+            }}
           >
             {({}) => (
               <Form className="grid grid-cols-1 gap-4 mt-1">

@@ -1,27 +1,11 @@
 import React from 'react';
-import { useMutation } from 'urql';
 import { Prompt } from '../components/Prompt';
+import { useLoginMutation } from '../generated/graphql';
 
 interface loginProps {}
 
-const LOGIN_MUT = `
-  mutation Login($input: LoginInput!) {
-    login(input: $input) {
-      errors {
-        field
-        message
-      }
-      user {
-        id
-        email
-        name
-      }
-    }
-  }
-`;
-
 export const Login: React.FC<loginProps> = ({}) => {
-  const [, login] = useMutation(LOGIN_MUT);
+  const [, login] = useLoginMutation();
 
   return <Prompt fn={login} />;
 };

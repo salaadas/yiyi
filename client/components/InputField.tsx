@@ -24,7 +24,7 @@ export const InputField: React.FC<InputFieldProps> = ({
         onChange={field.onChange}
         placeholder={field.name}
       />
-      {error ? <span className="text-custom-accent">{error}</span> : null}
+      {error ? <span className="text-red-500">!!!svg!!! {error}</span> : null}
     </div>
   );
 };
