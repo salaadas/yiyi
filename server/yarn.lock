@@ -1342,7 +1342,7 @@ express-session@^1.15.5:
     safe-buffer "5.2.1"
     uid-safe "~2.1.5"
 
-express-sesssion@^1.15.5:
+express-sesssion@^1.17.5:
   version "1.15.5"
   resolved "https://registry.yarnpkg.com/express-sesssion/-/express-sesssion-1.15.5.tgz#d881b5c2cdb0790ddfa861c74bb0cdb14628f0e7"
   integrity sha512-BHmo8904az0WbuSN5LgE3M7gafxaNpDEjo8VLGFGDCr86WYTy9dOzy2Ju9aQCRKyM5/UFgGApeGhXd38y+xSXg==
