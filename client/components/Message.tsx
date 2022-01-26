@@ -20,7 +20,7 @@ export const Message: React.FC<MessageProps> = ({ name, content }) => {
         <p className="text-left font-semibold text-custom-light mr-1 cursor-pointer">
           {name}
         </p>
-        <p className="text-lg text-left text-custom-light mr-1 whitespace-normal">
+        <p className="text-left text-custom-light mr-1 whitespace-normal">
           {content}
         </p>
       </div>
