@@ -2,11 +2,9 @@
 
 ## Goals
 
-[] Learn more about subscriptions
-
-[] Create a finished web (from `back` to `front`)
-
-[] Do files uploading
+- [x] Learn more about subscriptions
+- [ ] Create a finished web (from `back` to `front`)
+- [ ] Do files uploading
 
 ## Requirements
 
