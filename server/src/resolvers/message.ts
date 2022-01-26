@@ -1,8 +1,26 @@
 // TODO: because I implemented the user too soon,
 // I need to finish the user to do mutation with message :(
-import { Arg, Ctx, Query, Resolver } from 'type-graphql';
+import {
+  Arg,
+  Ctx,
+  Field,
+  InputType,
+  Mutation,
+  Query,
+  Resolver,
+  UseMiddleware,
+} from 'type-graphql';
 import { Message } from '@generated/type-graphql';
 import { MyContext } from '../types';
+import { isAuth } from '../middleware/isAuth';
+
+@InputType()
+class MessageInput {
+  @Field()
+  content: string;
+  @Field()
+  important: boolean;
+}
 
 @Resolver()
 export class MessageResolver {
@@ -25,19 +43,19 @@ export class MessageResolver {
 
   // create message
   //
-  // @Mutation(() => Message)
-  // async createMessage(
-  //   @Arg('content') content: string,
-  //   @Arg('important', {defaultValue: 0}) important: boolean,
-  //   @Ctx() {prisma}: MyContext
-  // ): Promise<Message>{
-  //   return await prisma.message.create({
-  //     data: {
-  //       content,
-  //       important
-  //     }
-  //   })
-  // }
+  @Mutation(() => Message)
+  @UseMiddleware(isAuth)
+  async createMessage(
+    @Arg('input') input: MessageInput,
+    @Ctx() { prisma, req }: MyContext
+  ): Promise<Message> {
+    return await prisma.message.create({
+      data: {
+        ...input,
+        userId: req.session.userId,
+      } as any,
+    });
+  }
 
   // update message
   //

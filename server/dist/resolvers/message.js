@@ -15,6 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessageResolver = void 0;
 const type_graphql_1 = require("type-graphql");
 const type_graphql_2 = require("@generated/type-graphql");
+const isAuth_1 = require("../middleware/isAuth");
+let MessageInput = class MessageInput {
+};
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", String)
+], MessageInput.prototype, "content", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", Boolean)
+], MessageInput.prototype, "important", void 0);
+MessageInput = __decorate([
+    (0, type_graphql_1.InputType)()
+], MessageInput);
 let MessageResolver = class MessageResolver {
     async messages({ prisma }) {
         return await prisma.message.findMany();
@@ -24,6 +38,11 @@ let MessageResolver = class MessageResolver {
             where: {
                 id,
             },
+        });
+    }
+    async createMessage(input, { prisma, req }) {
+        return await prisma.message.create({
+            data: Object.assign(Object.assign({}, input), { userId: req.session.userId }),
         });
     }
 };
@@ -42,6 +61,15 @@ __decorate([
     __metadata("design:paramtypes", [Object, Number]),
     __metadata("design:returntype", Promise)
 ], MessageResolver.prototype, "message", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => type_graphql_2.Message),
+    (0, type_graphql_1.UseMiddleware)(isAuth_1.isAuth),
+    __param(0, (0, type_graphql_1.Arg)('input')),
+    __param(1, (0, type_graphql_1.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [MessageInput, Object]),
+    __metadata("design:returntype", Promise)
+], MessageResolver.prototype, "createMessage", null);
 MessageResolver = __decorate([
     (0, type_graphql_1.Resolver)()
 ], MessageResolver);
