@@ -3,7 +3,6 @@
 @import url('http://fonts.cdnfonts.com/css/ia-writer-quattro-s');
 
 @tailwind components;
-@tailwind utilities;
 
 h1,
 h2,
@@ -58,6 +57,33 @@ p.small {
   font-size: 0.85rem;
 }
 
+html,
+body,
+#__next {
+  background-color: var(--color-background-light);
+  color: var(--color-text-light);
+  height: 100%;
+  width: 100%;
+}
+
+html {
+  position: fixed;
+}
+
+#__next {
+  overflow-y: auto;
+}
+
+button {
+  background-color: var(--color-accent);
+}
+
+.land {
+  background-image: url('../public/noise.png');
+}
+
+@tailwind utilities;
+
 ::-webkit-scrollbar {
   overflow: overlay;
   width: 8px;
@@ -70,21 +96,4 @@ p.small {
 ::-webkit-scrollbar-thumb {
   background-color: #333;
   border-radius: 5px;
-}
-
-html,
-body,
-#__next {
-  background-color: var(--color-background-light);
-  color: var(--color-text-light);
-  height: 100%;
-  width: 100%;
-}
-
-button {
-  background-color: var(--color-accent);
-}
-
-.land {
-  background-image: url('../public/noise.png');
 }
