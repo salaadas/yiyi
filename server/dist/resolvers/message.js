@@ -29,6 +29,7 @@ __decorate([
 MessageInput = __decorate([
     (0, type_graphql_1.InputType)()
 ], MessageInput);
+const NEW_CHAT_MESSAGE = 'NEW_CHAT_MESSAGE';
 let MessageResolver = class MessageResolver {
     async messages({ prisma }) {
         return await prisma.message.findMany();
@@ -40,10 +41,12 @@ let MessageResolver = class MessageResolver {
             },
         });
     }
-    async createMessage(input, { prisma, req }) {
-        return await prisma.message.create({
+    async createMessage(pubSub, input, { prisma, req }) {
+        const message = await prisma.message.create({
             data: Object.assign(Object.assign({}, input), { userId: req.session.userId }),
         });
+        await pubSub.publish(NEW_CHAT_MESSAGE, message);
+        return message;
     }
     async updateMessage(input, id, { prisma, req }) {
         try {
@@ -72,6 +75,9 @@ let MessageResolver = class MessageResolver {
             return false;
         }
     }
+    messageSent(message) {
+        return message;
+    }
 };
 __decorate([
     (0, type_graphql_1.Query)(() => [type_graphql_2.Message]),
@@ -91,10 +97,12 @@ __decorate([
 __decorate([
     (0, type_graphql_1.Mutation)(() => type_graphql_2.Message),
     (0, type_graphql_1.UseMiddleware)(isAuth_1.isAuth),
-    __param(0, (0, type_graphql_1.Arg)('input')),
-    __param(1, (0, type_graphql_1.Ctx)()),
+    __param(0, (0, type_graphql_1.PubSub)()),
+    __param(1, (0, type_graphql_1.Arg)('input')),
+    __param(2, (0, type_graphql_1.Ctx)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [MessageInput, Object]),
+    __metadata("design:paramtypes", [type_graphql_1.PubSubEngine,
+        MessageInput, Object]),
     __metadata("design:returntype", Promise)
 ], MessageResolver.prototype, "createMessage", null);
 __decorate([
@@ -114,6 +122,13 @@ __decorate([
     __metadata("design:paramtypes", [Number, Object]),
     __metadata("design:returntype", Promise)
 ], MessageResolver.prototype, "deleteMessage", null);
+__decorate([
+    (0, type_graphql_1.Subscription)({ topics: NEW_CHAT_MESSAGE }),
+    __param(0, (0, type_graphql_1.Root)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [type_graphql_2.Message]),
+    __metadata("design:returntype", type_graphql_2.Message)
+], MessageResolver.prototype, "messageSent", null);
 MessageResolver = __decorate([
     (0, type_graphql_1.Resolver)()
 ], MessageResolver);

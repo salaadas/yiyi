@@ -26,7 +26,9 @@ const prisma = new client_1.PrismaClient();
     const RedisStore = (0, connect_redis_1.default)(express_session_1.default);
     const redisClient = (0, redis_1.createClient)();
     app.use((0, cors_1.default)({
-        origin: 'http://localhost:3000',
+        origin: !true
+            ? 'http://localhost:3000'
+            : 'https://studio.apollographql.com',
         credentials: true,
     }));
     app.use((0, express_session_1.default)({

@@ -8,7 +8,11 @@ import {
   Mutation,
   Query,
   Resolver,
+  Subscription,
+  PubSub,
+  PubSubEngine,
   UseMiddleware,
+  Root,
 } from 'type-graphql';
 import { Message } from '@generated/type-graphql';
 import { MyContext } from '../types';
@@ -21,6 +25,8 @@ class MessageInput {
   @Field()
   important: boolean;
 }
+
+const NEW_CHAT_MESSAGE = 'NEW_CHAT_MESSAGE';
 
 @Resolver()
 export class MessageResolver {
@@ -46,15 +52,20 @@ export class MessageResolver {
   @Mutation(() => Message)
   @UseMiddleware(isAuth)
   async createMessage(
+    @PubSub() pubSub: PubSubEngine,
     @Arg('input') input: MessageInput,
     @Ctx() { prisma, req }: MyContext
   ): Promise<Message> {
-    return await prisma.message.create({
+    const message = await prisma.message.create({
       data: {
         ...input,
         userId: req.session.userId,
       } as any,
     });
+
+    await pubSub.publish(NEW_CHAT_MESSAGE, message);
+
+    return message;
   }
 
   // update message
@@ -98,5 +109,12 @@ export class MessageResolver {
     } catch {
       return false;
     }
+  }
+
+  // sending msg
+  //
+  @Subscription({ topics: NEW_CHAT_MESSAGE })
+  messageSent(@Root() message: Message): Message {
+    return message;
   }
 }
