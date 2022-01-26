@@ -15,6 +15,7 @@ const connect_redis_1 = __importDefault(require("connect-redis"));
 const express_session_1 = __importDefault(require("express-session"));
 const redis_1 = require("redis");
 const cors_1 = __importDefault(require("cors"));
+const constants_1 = require("./constants");
 const prisma = new client_1.PrismaClient();
 (async () => {
     const app = (0, express_1.default)();
@@ -26,7 +27,7 @@ const prisma = new client_1.PrismaClient();
     }));
     app.use((0, express_session_1.default)({
         store: new RedisStore({ client: redisClient, disableTouch: true }),
-        name: 'yid',
+        name: constants_1.COOKIE_NAME,
         saveUninitialized: false,
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 365 * 10,

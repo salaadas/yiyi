@@ -10,6 +10,7 @@ import connectRedis from 'connect-redis';
 import session from 'express-session';
 import { createClient } from 'redis';
 import cors from 'cors';
+import { COOKIE_NAME } from './constants';
 
 declare module 'express-session' {
   interface SessionData {
@@ -26,7 +27,7 @@ const prisma = new PrismaClient();
 
   app.use(
     cors({
-      origin: 'http://localhost:3000',
+      origin: 'http://localhost:3000', // 'https://studio.apollographql.com',
       credentials: true,
     })
   );
@@ -34,7 +35,7 @@ const prisma = new PrismaClient();
   app.use(
     session({
       store: new RedisStore({ client: redisClient, disableTouch: true }),
-      name: 'yid',
+      name: COOKIE_NAME,
       saveUninitialized: false,
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
