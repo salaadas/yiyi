@@ -31,7 +31,7 @@ const prisma = new PrismaClient();
 
   app.use(
     cors({
-      origin: !true
+      origin: true
         ? 'http://localhost:3000'
         : 'https://studio.apollographql.com',
       credentials: true,
