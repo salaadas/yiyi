@@ -59,43 +59,44 @@ export class MessageResolver {
 
   // update message
   //
-  // @Mutation(() => Message, { nullable: true })
-  // async updateMessage(
-  //   @Arg('newContent') newContent: string,
-  //   @Arg('id') id: number,
-  //   @Ctx() { prisma }: MyContext
-  // ): Promise<Message | null> {
-  //   try {
-  //     const updatedMessage = await prisma.message.update({
-  //       where: {
-  //         id,
-  //       },
-  //       data: {
-  //         newContent,
-  //       },
-  //     });
-  //     return updatedMessage;
-  //   } catch {
-  //     return null;
-  //   }
-  // }
+  @Mutation(() => Message, { nullable: true })
+  async updateMessage(
+    @Arg('input') input: MessageInput,
+    @Arg('id') id: number,
+    @Ctx() { prisma, req }: MyContext
+  ): Promise<Message | null> {
+    try {
+      const updatedMessage = await prisma.message.update({
+        where: {
+          id,
+        },
+        data: {
+          ...input,
+          userId: req.session.userId,
+        },
+      });
+      return updatedMessage;
+    } catch {
+      return null;
+    }
+  }
 
   // delete message
   //
-  // @Mutation(() => Boolean)
-  // async deleteMessage(
-  //   @Arg('id') id: number,
-  //   @Ctx() { prisma }: MyContext
-  // ): Promise<boolean> {
-  //   try {
-  //     await prisma.message.delete({
-  //       where: {
-  //         id,
-  //       },
-  //     });
-  //     return true;
-  //   } catch {
-  //     return false;
-  //   }
-  // }
+  @Mutation(() => Boolean)
+  async deleteMessage(
+    @Arg('id') id: number,
+    @Ctx() { prisma }: MyContext
+  ): Promise<boolean> {
+    try {
+      await prisma.message.delete({
+        where: {
+          id,
+        },
+      });
+      return true;
+    } catch {
+      return false;
+    }
+  }
 }

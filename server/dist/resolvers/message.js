@@ -45,6 +45,33 @@ let MessageResolver = class MessageResolver {
             data: Object.assign(Object.assign({}, input), { userId: req.session.userId }),
         });
     }
+    async updateMessage(input, id, { prisma, req }) {
+        try {
+            const updatedMessage = await prisma.message.update({
+                where: {
+                    id,
+                },
+                data: Object.assign(Object.assign({}, input), { userId: req.session.userId }),
+            });
+            return updatedMessage;
+        }
+        catch (_a) {
+            return null;
+        }
+    }
+    async deleteMessage(id, { prisma }) {
+        try {
+            await prisma.message.delete({
+                where: {
+                    id,
+                },
+            });
+            return true;
+        }
+        catch (_a) {
+            return false;
+        }
+    }
 };
 __decorate([
     (0, type_graphql_1.Query)(() => [type_graphql_2.Message]),
@@ -70,6 +97,23 @@ __decorate([
     __metadata("design:paramtypes", [MessageInput, Object]),
     __metadata("design:returntype", Promise)
 ], MessageResolver.prototype, "createMessage", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => type_graphql_2.Message, { nullable: true }),
+    __param(0, (0, type_graphql_1.Arg)('input')),
+    __param(1, (0, type_graphql_1.Arg)('id')),
+    __param(2, (0, type_graphql_1.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [MessageInput, Number, Object]),
+    __metadata("design:returntype", Promise)
+], MessageResolver.prototype, "updateMessage", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)('id')),
+    __param(1, (0, type_graphql_1.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:returntype", Promise)
+], MessageResolver.prototype, "deleteMessage", null);
 MessageResolver = __decorate([
     (0, type_graphql_1.Resolver)()
 ], MessageResolver);
