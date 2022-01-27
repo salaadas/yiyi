@@ -22,3 +22,5 @@ You need to have
 - ...
 
 ## WIP
+
+![work in progress](wip.jpg)
