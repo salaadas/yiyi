@@ -10,9 +10,9 @@ export const Message: React.FC<MessageProps> = ({ name, content }) => {
     <div className="w-full flex flex-row items-center justify-between py-2 px-16 m-0 hover:bg-custom-accent transition-all duration-200 ease-linear">
       <div className="flex flex-col items-center w-12 m-0 ml-2 mb-auto">
         <img
-          src={`https://avatars.dicebear.com/api/open-peeps/seed.svg`}
+          src={`https://avatars.dicebear.com/api/croodles-neutral/seed.svg`}
           alt=""
-          className="bg-gray-200 flex-none w-12 h-full rounded-full shadow-md object-cover mb-auto mt-0 mx-0 cursor-pointer"
+          className="bg-gray-100 flex-none w-12 h-full rounded-full shadow-sm object-cover mb-auto mt-0 mx-0 cursor-pointer"
         />
       </div>
 
