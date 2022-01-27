@@ -1,5 +1,6 @@
 import { useField } from 'formik';
 import React from 'react';
+import { TiWarningOutline } from 'react-icons/ti';
 
 type InputFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   name: string;
@@ -24,7 +25,14 @@ export const InputField: React.FC<InputFieldProps> = ({
         onChange={field.onChange}
         placeholder={props.placeholder ? props.placeholder : field.name}
       />
-      {error ? <span className="text-red-500">!!!svg!!! {error}</span> : null}
+      {error ? (
+        <span className="text-red-500 flex gap-2">
+          <p className="mt-1 ml-1">
+            <TiWarningOutline />
+          </p>
+          <p>{error}</p>
+        </span>
+      ) : null}
     </div>
   );
 };

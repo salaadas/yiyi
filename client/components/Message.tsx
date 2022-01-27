@@ -7,7 +7,7 @@ interface MessageProps {
 
 export const Message: React.FC<MessageProps> = ({ name, content }) => {
   return (
-    <div className="w-full flex flex-row items-center justify-between py-2 px-16 m-0 hover:bg-custom-accent">
+    <div className="w-full flex flex-row items-center justify-between py-2 px-16 m-0 hover:bg-custom-accent transition-all duration-200 ease-linear">
       <div className="flex flex-col items-center w-12 m-0 ml-2 mb-auto">
         <img
           src={`https://avatars.dicebear.com/api/open-peeps/seed.svg`}
