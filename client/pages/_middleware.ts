@@ -6,6 +6,7 @@ export async function middleware(req: NextRequest, ev: NextFetchEvent) {
   const { pathname } = req.nextUrl;
 
   if (cookie && pathname !== '/') {
+    // TODO: Validate cookie
     console.log(cookie);
     return NextResponse.redirect('/');
   } else if (!cookie && pathname !== '/login') {

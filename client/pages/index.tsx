@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { BottomBar } from '../components/BottomBar';
+import { ChatLog } from '../components/ChatLog';
 import { Message } from '../components/Message';
 import { useMeQuery } from '../generated/graphql';
 
@@ -35,9 +36,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex flex-col h-screen w-screen border-8 border-custom-heading-primary-light border-l-0 bg-custom-bg-light">
-          <Message name={username} content="test" />
-        </div>
+        <ChatLog />
 
         <BottomBar />
       </div>

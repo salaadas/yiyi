@@ -1,0 +1,10 @@
+subscription MessageSent {
+  messageSent {
+    id
+    createdAt
+    updatedAt
+    content
+    important
+    userId
+  }
+}

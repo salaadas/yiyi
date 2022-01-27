@@ -38,11 +38,29 @@ export type Message = {
   userId: Scalars['Int'];
 };
 
+export type MessageInput = {
+  content: Scalars['String'];
+  important: Scalars['Boolean'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  createMessage: Message;
+  deleteMessage: Scalars['Boolean'];
   login: UserResponse;
   logout: Scalars['Boolean'];
   register: UserResponse;
+  updateMessage?: Maybe<Message>;
+};
+
+
+export type MutationCreateMessageArgs = {
+  input: MessageInput;
+};
+
+
+export type MutationDeleteMessageArgs = {
+  id: Scalars['Float'];
 };
 
 
@@ -53,6 +71,12 @@ export type MutationLoginArgs = {
 
 export type MutationRegisterArgs = {
   input: RegisterInput;
+};
+
+
+export type MutationUpdateMessageArgs = {
+  id: Scalars['Float'];
+  input: MessageInput;
 };
 
 export type Query = {
@@ -74,6 +98,11 @@ export type RegisterInput = {
   password: Scalars['String'];
 };
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  messageSent: Message;
+};
+
 export type User = {
   __typename?: 'User';
   _count?: Maybe<UserCount>;
@@ -93,6 +122,13 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
+export type CreateMessageMutationVariables = Exact<{
+  input: MessageInput;
+}>;
+
+
+export type CreateMessageMutation = { __typename?: 'Mutation', createMessage: { __typename?: 'Message', id: number, createdAt: any, updatedAt: any, content: string, important: boolean, userId: number } };
+
 export type LoginMutationVariables = Exact<{
   input: LoginInput;
 }>;
@@ -110,7 +146,33 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: number, email: string, name: string } | null | undefined };
 
+export type MessagesQueryVariables = Exact<{ [key: string]: never; }>;
 
+
+export type MessagesQuery = { __typename?: 'Query', messages: Array<{ __typename?: 'Message', id: number, createdAt: any, updatedAt: any, content: string, important: boolean, userId: number }> };
+
+export type MessageSentSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MessageSentSubscription = { __typename?: 'Subscription', messageSent: { __typename?: 'Message', id: number, createdAt: any, updatedAt: any, content: string, important: boolean, userId: number } };
+
+
+export const CreateMessageDocument = gql`
+    mutation CreateMessage($input: MessageInput!) {
+  createMessage(input: $input) {
+    id
+    createdAt
+    updatedAt
+    content
+    important
+    userId
+  }
+}
+    `;
+
+export function useCreateMessageMutation() {
+  return Urql.useMutation<CreateMessageMutation, CreateMessageMutationVariables>(CreateMessageDocument);
+};
 export const LoginDocument = gql`
     mutation Login($input: LoginInput!) {
   login(input: $input) {
@@ -151,4 +213,36 @@ export const MeDocument = gql`
 
 export function useMeQuery(options: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<MeQuery>({ query: MeDocument, ...options });
+};
+export const MessagesDocument = gql`
+    query Messages {
+  messages {
+    id
+    createdAt
+    updatedAt
+    content
+    important
+    userId
+  }
+}
+    `;
+
+export function useMessagesQuery(options: Omit<Urql.UseQueryArgs<MessagesQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<MessagesQuery>({ query: MessagesDocument, ...options });
+};
+export const MessageSentDocument = gql`
+    subscription MessageSent {
+  messageSent {
+    id
+    createdAt
+    updatedAt
+    content
+    important
+    userId
+  }
+}
+    `;
+
+export function useMessageSentSubscription<TData = MessageSentSubscription>(options: Omit<Urql.UseSubscriptionArgs<MessageSentSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<MessageSentSubscription, TData>) {
+  return Urql.useSubscription<MessageSentSubscription, TData, MessageSentSubscriptionVariables>({ query: MessageSentDocument, ...options }, handler);
 };

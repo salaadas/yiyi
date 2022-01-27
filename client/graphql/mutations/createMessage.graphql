@@ -1,0 +1,10 @@
+mutation CreateMessage($input: MessageInput!) {
+  createMessage(input: $input) {
+    id
+    createdAt
+    updatedAt
+    content
+    important
+    userId
+  }
+}
