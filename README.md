@@ -30,3 +30,7 @@ You need to have
 - ...
 
 ## WIP
+
+The login page:
+
+![login page](wip.jpg)
