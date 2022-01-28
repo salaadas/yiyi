@@ -17,7 +17,7 @@ export const Message: React.FC<MessageProps> = ({ name, content }) => {
       </div>
 
       <div className="w-11/12 flex flex-col justify-start ml-10">
-        <p className="text-left font-semibold text-custom-light mr-1 cursor-pointer">
+        <p className="text-left font-semibold text-custom-light mr-1 cursor-pointer hover:underline">
           {name}
         </p>
         <p className="text-left text-custom-light mr-1 whitespace-normal">

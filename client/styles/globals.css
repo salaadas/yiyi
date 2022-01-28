@@ -85,7 +85,9 @@ button {
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-  display: none;
+  /* display: none; */
+  overflow: overlay;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {

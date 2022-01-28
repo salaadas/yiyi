@@ -20,7 +20,8 @@ const client = createClient({
   exchanges: [
     ...defaultExchanges,
     subscriptionExchange({
-      forwardSubscription: (operation) => subscriptionClient.request(operation),
+      forwardSubscription: (operation) =>
+        subscriptionClient!.request(operation),
     }),
   ],
 });

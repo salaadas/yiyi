@@ -17,7 +17,6 @@ export const BottomBar: React.FC<BottomBarProps> = ({}) => {
             return;
           }
           values.content = values.content.trim();
-          console.log(values);
           createMessage({ input: { ...values } });
           resetForm();
         }}
