@@ -5,6 +5,7 @@
 This is an invitation-based application, so:
 
 - No REGISTRATION page
+- This is a chat app btw 😅
 
 I will continue to develop this from time to time, mainly adding WebRTC for video calling and share screen 👍🏻
 
