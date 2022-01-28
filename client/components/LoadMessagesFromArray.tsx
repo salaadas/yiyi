@@ -1,5 +1,5 @@
 import React from 'react';
-import { useUserQuery } from '../generated/graphql';
+import { fetchUsername } from '../helper';
 import { Message } from './Message';
 
 interface LoadMessagesFromArrayProps {
@@ -17,19 +17,13 @@ interface LoadMessagesFromArrayProps {
 export const LoadMessagesFromArray: React.FC<LoadMessagesFromArrayProps> = ({
   messages,
 }) => {
-  const fetchUsername = (userId: number) => {
-    const [{ data }] = useUserQuery({
-      variables: { userId },
-    });
-
-    return data?.user?.name || 'John Doe';
-  };
+  console.log('rerender');
 
   return (
     <>
       {messages?.map((msg) => (
         <Message
-          name={fetchUsername(msg.userId)}
+          name={msg.userId.toString()}
           key={msg.id}
           content={msg.content}
         />

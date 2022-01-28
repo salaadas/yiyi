@@ -12,7 +12,7 @@ export const Message: React.FC<MessageProps> = ({ name, content }) => {
         <img
           src={`https://avatars.dicebear.com/api/croodles-neutral/seed.svg`}
           alt=""
-          className="bg-gray-100 flex-none rounded-[24px] shadow-sm object-cover mt-0 mx-0 cursor-pointer"
+          className="bg-gray-100 flex-none rounded-[24px] shadow-sm object-cover mt-0 mx-0 cursor-pointer select-none"
         />
       </div>
 

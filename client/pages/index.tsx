@@ -37,7 +37,7 @@ export default function Home() {
         </div>
 
         <div className="w-52 h-screen m-0 ml-20 border-8 box-border border-custom-heading-primary-light bg-gray-200 overflow-scroll">
-          <div className="flex flex-col items-center justify-start p-1 m-0 overflow-hidden">
+          <div className="flex flex-col items-center justify-start p-1 m-0 overflow-hidden select-none">
             <div>ONLINE:</div>
             <div>🔴 {username}</div>
           </div>
