@@ -1,0 +1,5 @@
+query User($userId: Float!) {
+  user(id: $userId) {
+    name
+  }
+}

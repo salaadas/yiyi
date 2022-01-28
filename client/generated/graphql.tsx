@@ -85,10 +85,16 @@ export type Query = {
   me?: Maybe<User>;
   message?: Maybe<Message>;
   messages: Array<Message>;
+  user?: Maybe<User>;
 };
 
 
 export type QueryMessageArgs = {
+  id: Scalars['Float'];
+};
+
+
+export type QueryUserArgs = {
   id: Scalars['Float'];
 };
 
@@ -140,6 +146,13 @@ export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type LogoutMutation = { __typename?: 'Mutation', logout: boolean };
+
+export type UserQueryVariables = Exact<{
+  userId: Scalars['Float'];
+}>;
+
+
+export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', name: string } | null | undefined };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -200,6 +213,17 @@ export const LogoutDocument = gql`
 
 export function useLogoutMutation() {
   return Urql.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument);
+};
+export const UserDocument = gql`
+    query User($userId: Float!) {
+  user(id: $userId) {
+    name
+  }
+}
+    `;
+
+export function useUserQuery(options: Omit<Urql.UseQueryArgs<UserQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<UserQuery>({ query: UserDocument, ...options });
 };
 export const MeDocument = gql`
     query Me {

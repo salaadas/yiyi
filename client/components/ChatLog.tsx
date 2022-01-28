@@ -1,16 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
+  MessageSentSubscription,
+  MessagesQuery,
   useMessageSentSubscription,
   useMessagesQuery,
 } from '../generated/graphql';
-import { Message } from './Message';
+import { LoadMessagesFromArray } from './LoadMessagesFromArray';
 
 interface ChatLogProps {}
 
 export const ChatLog: React.FC<ChatLogProps> = ({}) => {
-  const handleMessage = (messages: any[] = [], response: any) => {
+  const handleMessage = (
+    messages: MessageSentSubscription[] = [],
+    response: MessageSentSubscription
+  ) => {
     const result = [...messages, response.messageSent];
-    return result;
+    return result as MessageSentSubscription[];
   };
 
   const [oldMsgFetched, setOldMsgFetched] = useState(false);
@@ -37,20 +42,8 @@ export const ChatLog: React.FC<ChatLogProps> = ({}) => {
       ref={chatContainer}
       className="flex flex-col h-screen w-screen border-8 border-custom-heading-primary-light pb-14 border-l-0 bg-custom-bg-light overflow-scroll"
     >
-      {oldMessages?.messages.map((msg) => (
-        <Message
-          name={msg.userId.toString()}
-          key={msg.id}
-          content={msg.content}
-        />
-      ))}
-      {newMessages?.map((msg) => (
-        <Message
-          name={msg.userId.toString()}
-          key={msg.id}
-          content={msg.content}
-        />
-      ))}
+      <LoadMessagesFromArray messages={oldMessages?.messages as any[]} />
+      <LoadMessagesFromArray messages={newMessages as any[]} />
     </div>
   );
 };

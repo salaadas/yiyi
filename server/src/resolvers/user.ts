@@ -60,6 +60,12 @@ export class UserResolver {
     return null;
   }
 
+  @Query(() => User, { nullable: true })
+  async user(@Arg('id') id: number, @Ctx() { prisma }: MyContext) {
+    const user = await prisma.user.findUnique({ where: { id } });
+    return user || null;
+  }
+
   @Mutation(() => UserResponse)
   async register(
     @Arg('input') { name, email, password }: RegisterInput,
