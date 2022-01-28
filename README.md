@@ -1,5 +1,13 @@
 # Quick start
 
+## Features
+
+This is an invitation-based application, so:
+
+- No REGISTRATION page
+
+I will continue to develop this from time to time, mainly adding WebRTC for video calling and share screen 👍🏻
+
 ## Goals
 
 - [x] Learn more about subscriptions
