@@ -1,11 +1,16 @@
-# Quick start
+# Quick start - yiyi (A chat app)
 
 ## Features
 
-This is an invitation-based application, so:
+This is an **_invitation-based_** application, so:
 
-- No REGISTRATION page
-- This is a chat app btw 😅
+- [x] No REGISTRATION
+- [x] Chat 😅
+- [x] Embed links
+- [ ] Delete messages
+- [ ] Mark messages as important
+- [ ] Display username (current displaying index)
+- [ ] Filter only links/media
 
 I will continue to develop this from time to time, mainly adding WebRTC for video calling and share screen 👍🏻
 
@@ -13,7 +18,7 @@ I will continue to develop this from time to time, mainly adding WebRTC for vide
 
 - [x] Learn more about subscriptions
 - [ ] Create a finished web (from `back` to `front`)
-- [ ] Do files uploading
+- [ ] Learn files uploading (Cloudinary or S3, idk yet)
 
 ## Requirements
 
