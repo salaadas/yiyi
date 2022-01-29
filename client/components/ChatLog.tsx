@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   MessageSentSubscription,
-  MessagesQuery,
   useMessageSentSubscription,
   useMessagesQuery,
 } from '../generated/graphql';
@@ -25,17 +24,17 @@ export const ChatLog: React.FC<ChatLogProps> = ({}) => {
   const chatContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (oldMessages) {
-      setOldMsgFetched(true);
-    }
-  }, [oldMessages]);
-
-  useEffect(() => {
     const scroll =
       chatContainer.current!.scrollHeight - chatContainer.current!.clientHeight;
 
     chatContainer.current?.scrollTo(0, scroll);
   }, [newMessages]);
+
+  useEffect(() => {
+    if (oldMessages) {
+      setOldMsgFetched(true);
+    }
+  }, [oldMessages]);
 
   return (
     <div

@@ -27,6 +27,7 @@ module.exports = {
           'secondary-light': 'var(--color-text-secondary-light)',
           'bg-light': 'var(--color-background-light)',
           'heading-primary-light': 'var(--color-heading-primary-light)',
+          'heading-secondary': 'var(--color-heading-secondary)',
         },
       },
     },

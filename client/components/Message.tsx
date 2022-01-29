@@ -1,4 +1,5 @@
 import React from 'react';
+import { Linkify } from './Linkify';
 
 interface MessageProps {
   name: string;
@@ -20,9 +21,11 @@ export const Message: React.FC<MessageProps> = ({ name, content }) => {
         <p className="text-left font-semibold text-custom-light mr-1 cursor-pointer hover:underline">
           {name}
         </p>
-        <p className="text-left text-custom-light mr-1 whitespace-normal">
-          {content}
-        </p>
+        <Linkify>
+          <p className="text-left text-custom-light mr-1 whitespace-normal">
+            {content}
+          </p>
+        </Linkify>
       </div>
     </div>
   );

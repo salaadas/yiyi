@@ -17,8 +17,6 @@ interface LoadMessagesFromArrayProps {
 export const LoadMessagesFromArray: React.FC<LoadMessagesFromArrayProps> = ({
   messages,
 }) => {
-  console.log('rerender');
-
   return (
     <>
       {messages?.map((msg) => (
