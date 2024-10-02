@@ -7,18 +7,20 @@ This is an **_invitation-based_** application, so:
 - [x] No REGISTRATION
 - [x] Chat 😅
 - [x] Embed links
-- [ ] Delete messages
-- [ ] Mark messages as important
-- [ ] Display username (current displaying index)
-- [ ] Filter only links/media
+- [x] Delete messages
+- [x] Mark messages as important
+- [x] Display username (current displaying index)
+- [x] Filter only links/media
+- [x] Voice chat
+- [x] Basic video call
 
 I will continue to develop this from time to time, mainly adding WebRTC for video calling and share screen 👍🏻
 
 ## Goals
 
 - [x] Learn more about subscriptions
-- [ ] Create a finished web (from `back` to `front`)
-- [ ] Learn files uploading (Cloudinary or S3, idk yet)
+- [x] Create a finished web (from `back` to `front`)
+- [x] Learn files uploading (Cloudinary or S3, idk yet)
 
 ## Requirements
 
